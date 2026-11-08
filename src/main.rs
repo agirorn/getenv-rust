@@ -1,39 +1,50 @@
 use clap::Parser;
-use dotenv;
 use std::env;
+use std::process::ExitCode;
 
 #[derive(Parser)]
 struct Cli {
-    /// This will be the first positional argument
-    name: String,
+    /// Enviroment variable name
+    name: Option<String>,
 
+    /// Support case insesitive variable name
     #[arg(short = 'i', long, default_value_t = false)]
     case_insensitive: bool,
+
+    /// List enviroment variable names
+    #[arg(short = 'l', long, default_value_t = false)]
+    list: bool,
 }
 
-use std::process::ExitCode;
-
 fn main() -> ExitCode {
-    // fn main() {
     dotenv::dotenv().ok();
     let args = Cli::parse();
-    let mut name: String = args.name.clone();
-    if args.case_insensitive {
-        name = name.to_uppercase();
+
+    if args.list {
+        for (name, _) in env::vars() {
+            println!("{name}");
+        }
+        return ExitCode::SUCCESS;
     }
 
-    match env::var(&name) {
-        Ok(value) => {
-            // let value = env::var(&name).expect("Environment variable ({name}) not found");
-            println!("{value}");
-            ExitCode::SUCCESS
+    match args.name {
+        None => {
+            for (name, value) in env::vars() {
+                println!("{name}={value}");
+            }
         }
-        Err(_) => {
-            eprintln!("Environment variable ({name}) not found");
-            ExitCode::from(1)
+        Some(mut name) => {
+            if args.case_insensitive {
+                name = name.to_uppercase();
+            }
+            match env::var(&name) {
+                Ok(value) => println!("{value}"),
+                Err(_) => {
+                    eprintln!("Environment variable ({name}) not found");
+                    return ExitCode::from(1);
+                }
+            }
         }
-    }
-    // // let value = env::var(&name).expect("Environment variable ({name}) not found");
-    // // println!("{value}");
-    // ExitCode::SUCCESS
+    };
+    ExitCode::SUCCESS
 }

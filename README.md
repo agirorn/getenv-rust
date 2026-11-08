@@ -7,6 +7,20 @@ provided by the operative system
 ## Usage
 
 ```shell
+Usage: getenv [OPTIONS] [NAME]
+
+Arguments:
+  [NAME]  Enviroment variable name
+
+Options:
+  -i, --case-insensitive  Support case insesitive variable name
+  -l, --list              List enviroment variable names
+  -h, --help              Print help
+```
+
+## Print VARIABLE_NAME value
+
+```shell
 echo "VARIABLE_NAME=THE_VALUE" >> .env
 getenv VARIABLE_NAME
 THE_VALUE # Print out

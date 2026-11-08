@@ -6,3 +6,10 @@ edition = "2024"
 [dependencies]
 clap = { version = "4.6.7", features = ["derive"] }
 dotenv = "0.15.0"
+
+
+[profile.release]
+opt-level = 3     # Maximum performance optimizations (default for release)
+lto = "fat"       # Heavy Link-Time Optimization across all crates
+codegen-units = 1 # Reduces parallel compilation units to allow better global optimization
+panic = "abort"   # Removes stack unwinding code, slightly boosting performance
