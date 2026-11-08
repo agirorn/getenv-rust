@@ -3,7 +3,7 @@ name = "getenv"
 version = "0.1.0"
 edition = "2024"
 description = """
-Print environment variable value after loading environment variables from a .env file
+Print environment variable value after loading environment variables from a .env file \
 """
 
 [dependencies]
