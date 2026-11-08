@@ -21,5 +21,5 @@ echo $?
 ## Build
 
 ```shell
-make Build
+make build
 ```
