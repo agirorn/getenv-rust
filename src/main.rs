@@ -3,6 +3,7 @@ use std::env;
 use std::process::ExitCode;
 
 #[derive(Parser)]
+#[command(about)]
 struct Cli {
     /// Enviroment variable name
     name: Option<String>,
