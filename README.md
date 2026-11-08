@@ -9,7 +9,13 @@ provided by the operative system
 ```shell
 echo "VARIABLE_NAME=THE_VALUE" >> .env
 getenv VARIABLE_NAME
+THE_VALUE # Print out
 getenv -i variable_name
+THE_VALUE # Print out
+getenv BAD_VARIABLE_NAME
+Environment variable (BAD_VARIABLE_NAME) not found # Print out
+echo $?
+1 # Print out
 ```
 
 ## Build
